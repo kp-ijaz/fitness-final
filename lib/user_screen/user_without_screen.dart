@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:homeworkout/db%20model/category/category_db.dart';
+import 'package:homeworkout/db%20model/category/report_db.dart';
 import 'package:homeworkout/db%20model/db_model.dart';
+import 'package:homeworkout/db%20model/report_model.dart';
 import 'package:homeworkout/user_screen/countdown.dart';
 // import 'package:homeworkout/db/category/category_db.dart';
 // import 'package:homeworkout/db/db_model.dart';
 import 'package:homeworkout/user_screen/user_exercise_details_screen.dart';
+import 'package:intl/intl.dart';
 
 class UserWithoutScreen extends StatelessWidget {
   final String heading;
@@ -79,8 +82,14 @@ class UserWithoutScreen extends StatelessWidget {
                                 icon: const Icon(Icons.play_circle,
                                     size: 35, color: Colors.amber),
                                 onPressed: () {
+                                  print('=++++++++++++++++++++');
+                                  var val = Reportmodal(
+                                      id: DateFormat("yyyy-MM-dd")
+                                          .format(DateTime.now()),
+                                      time: [30]);
+                                  ReportDB().addReport(val);
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (ctx) => CountdownPage(
+                                      builder: (ctx) => CountdownTimerPage(
                                             level: level,
                                             image: value.image,
                                           )));

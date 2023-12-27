@@ -17,52 +17,54 @@ class Headpage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 120, left: 20, right: 20),
-            child: Container(
-              height: 500,
-              width: 350,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: const Color.fromARGB(255, 0, 0, 0),
-                image: const DecorationImage(
-                  opacity: 150.0,
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                      'assets/images/Screenshot 2023-10-20 162513.png'),
+            child: Center(
+              child: Container(
+                height: 500,
+                width: 350,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                  image: const DecorationImage(
+                    opacity: 150.0,
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                        'assets/images/Screenshot 2023-10-20 162513.png'),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 150, right: 25, left: 25),
-                    child: Form(
-                      child: TextFormField(
-                        style: const TextStyle(color: Colors.white),
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color(0xFFFFFFFF),
-                                style: BorderStyle.solid),
-                          ),
-                          labelText: 'Enter your name',
-                          labelStyle: TextStyle(
-                            color: Color(0xFFFFFFFF),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 150, right: 25, left: 25),
+                      child: Form(
+                        child: TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xFFFFFFFF),
+                                  style: BorderStyle.solid),
+                            ),
+                            labelText: 'Enter your name',
+                            labelStyle: TextStyle(
+                              color: Color(0xFFFFFFFF),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (ctx) => const UserMainHome()));
-                        },
-                        child: const Text("Let's start")),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (ctx) => const UserMainHome()));
+                          },
+                          child: const Text("Let's start")),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

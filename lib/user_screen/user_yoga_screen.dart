@@ -71,9 +71,10 @@ class UserYogaScreen extends StatelessWidget {
                                       icon: const Icon(Icons.play_circle,
                                           size: 35, color: Colors.amber),
                                       onPressed: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                                builder: (ctx) => CountdownPage(
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (ctx) =>
+                                                    CountdownTimerPage(
                                                       level: level,
                                                       image: _value2.image,
                                                     )));

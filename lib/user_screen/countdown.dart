@@ -1,69 +1,80 @@
+import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:homeworkout/db%20model/category/report_db.dart';
+// import 'package:homeworkout/db%20model/category/report_db.dart';
 import 'package:homeworkout/db%20model/db_model.dart';
 import 'package:homeworkout/db%20model/report_model.dart';
+// import 'package:homeworkout/db%20model/report_model.dart';
 import 'package:homeworkout/user_screen/roundButton_countdown.dart';
-import 'package:homeworkout/user_screen/user_report_screen.dart';
 import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
-class CountdownPage extends StatefulWidget {
+class CountdownTimerPage extends StatefulWidget {
   List<String> image;
   Typelevel level;
-  CountdownPage({Key? key, required this.image, required this.level})
+  CountdownTimerPage({Key? key, required this.image, required this.level})
       : super(key: key);
 
   @override
-  _CountdownPageState createState() => _CountdownPageState();
+  _CountdownTimerPageState createState() => _CountdownTimerPageState();
 }
 
-class _CountdownPageState extends State<CountdownPage>
-    with TickerProviderStateMixin {
-  late AnimationController controller;
-  String id = '';
-  int? timer;
-
+class _CountdownTimerPageState extends State<CountdownTimerPage> {
+  Timer? _timer;
+  int _remainingSeconds;
   bool isPlaying = false;
+  String id = '';
+  late int time;
+  late int startSeconds;
 
-  String get countText {
-    Duration count = controller.duration! * controller.value;
-    return controller.isDismissed
-        ? '${(controller.duration!.inMinutes % 60).toString().padLeft(2, '0')}:${(controller.duration!.inSeconds % 60).toString().padLeft(2, '0')}'
-        : '${(count.inMinutes % 60).toString().padLeft(2, '0')}:${(count.inSeconds % 60).toString().padLeft(2, '0')}';
-  }
+  _CountdownTimerPageState({startSeconds = 30})
+      : _remainingSeconds = startSeconds;
 
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: widget.level == Typelevel.beginner
-          ? const Duration(seconds: 20)
-          : widget.level == Typelevel.intermediate
-              ? const Duration(seconds: 30)
-              : const Duration(seconds: 40),
-    );
-    controller.addListener(() {
+  void _startCountdown() {
+    const oneSecond = Duration(seconds: 1);
+    if (_timer != null && _timer!.isActive) {
+      _timer!.cancel();
       setState(() {
-        if (controller.isAnimating) {
+        isPlaying = false;
+      });
+    } else {
+      _timer = Timer.periodic(oneSecond, (Timer timer) {
+        if (_remainingSeconds <= 0) {
           setState(() {
-            isPlaying = true;
+            timer.cancel();
+            isPlaying = false;
           });
         } else {
           setState(() {
-            isPlaying = false;
+            _remainingSeconds--;
+            isPlaying = true;
           });
         }
       });
-    });
+    }
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
+  void _stopCountdown() {
+    if (_timer != null && _timer!.isActive) {
+      _timer!.cancel();
+      setState(() {
+        isPlaying = false;
+      });
+    }
   }
+
+  String _formatTime(int seconds) {
+    int minutes = seconds ~/ 60;
+    int remainingSeconds = seconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+  }
+
+  // @override
+  // void dispose() {
+  //   _timer?.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -120,99 +131,53 @@ class _CountdownPageState extends State<CountdownPage>
           Padding(
             padding: const EdgeInsets.only(top: 100),
             child: Center(
-              child: AnimatedBuilder(
-                animation: controller,
-                builder: (context, child) => Text(
-                  countText,
-                  style: const TextStyle(
-                      fontSize: 60,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _formatTime(_remainingSeconds),
+                    style: const TextStyle(fontSize: 48, color: Colors.white),
+                  ),
+                  _remainingSeconds == 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                ReportDB().addReport(Reportmodal(
+                                    id: DateFormat("yyyy-MM-dd")
+                                        .format(DateTime.now()),
+                                    time: [30]));
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'Finished',
+                                style: TextStyle(
+                                    color: Colors.amber, fontSize: 18),
+                              )),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: InkWell(
+                            onTap: _startCountdown,
+                            child: RoundButton(
+                              icon: isPlaying == true
+                                  ? Icons.pause
+                                  : Icons.play_arrow,
+                            ),
+                          ),
+                        ),
+                ],
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Text(
-                //   "${DateFormat("yyyy-MM-dd").format(DateTime.now())}",
-                //   style: TextStyle(color: Colors.amber),
-                // ),
-                GestureDetector(
-                  onTap: () {
-                    if (controller.isAnimating) {
-                      controller.stop();
-                      setState(() {
-                        isPlaying = false;
-                      });
-                    } else {
-                      print(controller.value);
-                      controller.reverse(
-                          from: controller.value == 0 ? 1.0 : controller.value);
-                      setState(() {
-                        isPlaying = true;
-                      });
-                    }
-                  },
-                  child: RoundButton(
-                    icon: isPlaying == true ? Icons.pause : Icons.play_arrow,
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.reset();
-                    setState(() {
-                      isPlaying = false;
-                    });
-                  },
-                  child: const RoundButton(
-                    icon: Icons.stop,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          controller.value == 0
-              ? Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        addreports();
-                      },
-                      child: TextButton(
-                        onPressed: () {
-                          ReportData(
-                              DateFormat('dd-MM-yyyy').format(DateTime.now()),
-                              controller.value);
-                        },
-                        child: const Text(
-                          'finish',
-                          style: TextStyle(color: Colors.amber, fontSize: 18),
-                        ),
-                      )),
-                )
-              : Container()
         ],
       ),
     );
   }
 
-  Future<void> addreports() async {
-    id = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    if (widget.level == Typelevel.beginner) {
-      timer = 20;
-    } else if (widget.level == Typelevel.intermediate) {
-      timer = 30;
-    } else {
-      timer = 40;
-    }
-    final report = Reportmodal(id: id, time: [timer!]);
-    await ReportDB().addReport(report);
-  }
+  // Future<void> addreport() async {
+  //   id = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  //   time = time + startSeconds;
+  //   Reportmodal(id: id, time: time);
+  // }
 }

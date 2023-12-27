@@ -5,6 +5,8 @@ const REPORT_DB_NAME = "report_db";
 
 abstract class reportscreen {
   Future<void> addReport(Reportmodal obj);
+  Future<void> getReports(Reportmodal obj);
+  Future<void> getAllReports(Reportmodal obj);
 }
 
 class ReportDB implements reportscreen {
@@ -20,5 +22,18 @@ class ReportDB implements reportscreen {
   Future<void> addReport(Reportmodal obj) async {
     final reportdb = await Hive.openBox<Reportmodal>(REPORT_DB_NAME);
     await reportdb.put(obj.id!, obj);
+  }
+
+  @override
+  Future<List<Reportmodal>> getAllReports(Reportmodal obj) async {
+    final reportdb = await Hive.openBox<Reportmodal>(REPORT_DB_NAME);
+    return reportdb.values.toList();
+  }
+
+  @override
+  Future<List<Reportmodal>> getReports(Reportmodal obj) async {
+    final reportdb = await Hive.openBox<Reportmodal>(REPORT_DB_NAME);
+    getAllReports(obj);
+    return reportdb.values.toList();
   }
 }

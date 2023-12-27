@@ -85,7 +85,7 @@ class UserGymScreen extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (ctx) => CountdownPage(
+                                      builder: (ctx) => CountdownTimerPage(
                                             level: level,
                                             image: _value1.image,
                                           )));
