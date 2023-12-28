@@ -1,6 +1,6 @@
 {
-    "name": "homeworkout",
-    "short_name": "homeworkout",
+    "name": "FitXpert",
+    "short_name": "FitXpert",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
