@@ -28,7 +28,7 @@ class _AddExerciseState extends State<AddExercise> {
   bool _intermediate = false;
   bool _advanced = false;
   String idtosent = '';
-  int? msgid;
+  int? msgidexercise;
   final _AddDescriptioncontroller = TextEditingController();
   double _currentDoubleValue = 1.0;
   final ImagePicker imagePicker = ImagePicker();
@@ -306,8 +306,6 @@ class _AddExerciseState extends State<AddExercise> {
                           AddExercise();
                           Addmsg1();
                           AwesomeNotifications().createNotification(
-                              schedule: NotificationAndroidCrontab(
-                                  allowWhileIdle: true),
                               content: NotificationContent(
                                   id: 1,
                                   channelKey: "basic_channel",
@@ -384,10 +382,10 @@ class _AddExerciseState extends State<AddExercise> {
   Future<void> Addmsg1() async {
     const title = "You have new exercise..!";
     const bodymsg = "A new exercise is added by admin check out";
-    msgid = DateTime.now().millisecondsSinceEpoch;
+    msgidexercise = DateTime.now().millisecondsSinceEpoch;
 
     final msg = MessageModal(
-        id: msgid,
+        id: msgidexercise,
         message: title,
         body: bodymsg,
         time: DateFormat("hh:mm").format(DateTime.now()));

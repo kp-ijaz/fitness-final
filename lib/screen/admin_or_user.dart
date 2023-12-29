@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeworkout/screen/admin_login.dart';
 import 'package:homeworkout/screen/user_login.dart';
-// import 'package:homeworkout/user_screen/user_botttomnavigation.dart';
 
 class Admin_user_page extends StatelessWidget {
   const Admin_user_page({super.key});
@@ -64,7 +63,7 @@ class Admin_user_page extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => const Adminlogin()));
+                                    builder: (context) => Adminlogin()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 40),
@@ -88,7 +87,7 @@ class Admin_user_page extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                      builder: (context) => const Headpage()));
+                                      builder: (context) => Headpage()));
                             },
                             child: Container(
                               height: 120,

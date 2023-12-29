@@ -39,9 +39,40 @@ class GymScreen extends StatelessWidget {
                         motion: const ScrollMotion(),
                         children: [
                           SlidableAction(
+                            // onPressed: (ctx) {
+                            //   CategoryDB().deleteExercise(_value1.id!);
+                            // },
                             onPressed: (ctx) {
-                              CategoryDB().deleteExercise(_value1.id!);
+                              final result = showDialog<bool>(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('Are you sure?'),
+                                  content: const Text(
+                                      'This action will permanently delete this data'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, false),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        CategoryDB()
+                                            .deleteExercise(_value1.id!);
+                                        Navigator.pop(context, true);
+                                        CategoryDB().refreshUi();
+                                      },
+                                      child: const Text('Delete'),
+                                    ),
+                                  ],
+                                ),
+                              );
+
+                              // if (result == null || !result) {
+                              //   return;
+                              // }
                             },
+
                             backgroundColor: const Color(0xFFFE4A49),
                             foregroundColor: Colors.white,
                             icon: Icons.delete,

@@ -4,6 +4,7 @@ import 'package:homeworkout/screen/category/notifications.dart';
 import 'package:homeworkout/screen/category/settings.dart';
 import 'package:homeworkout/user_screen/user_home.dart';
 import 'package:homeworkout/user_screen/user_report_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserFluidbottom extends StatefulWidget {
   const UserFluidbottom({super.key});
@@ -20,8 +21,11 @@ class _FluidbottomState extends State {
   @override
   void initState() {
     _child = const UserHom();
+    getUser();
     super.initState();
   }
+
+  String userNames = 'user';
 
   @override
   Widget build(context) {
@@ -54,14 +58,14 @@ class _FluidbottomState extends State {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10),
+                Padding(
+                  padding: const EdgeInsets.all(10),
                   child: SizedBox(
                     width: 5,
                     child: Text(
-                      'USER',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      userNames,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -164,5 +168,11 @@ class _FluidbottomState extends State {
         child: _child,
       );
     });
+  }
+
+  void getUser() async {
+    var shared = await SharedPreferences.getInstance();
+    userNames = shared.getString('user')!;
+    setState(() {});
   }
 }

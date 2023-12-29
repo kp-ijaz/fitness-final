@@ -18,53 +18,71 @@ class Settings extends StatelessWidget {
         padding: const EdgeInsets.only(top: 70, left: 20),
         child: Column(
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(
-                  Icons.share,
-                  color: Colors.amber,
-                  size: 40.0,
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.share,
+                    color: Colors.amber,
+                    size: 40.0,
+                  ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    'Share with friends',
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  padding: const EdgeInsets.only(left: 15),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Share with friends',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ),
                   ),
                 )
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 20),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                    size: 40.0,
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                      size: 40.0,
+                    ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
-                      'Rate us',
-                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    padding: const EdgeInsets.only(left: 15),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Rate us',
+                        style: TextStyle(fontSize: 20.0, color: Colors.white),
+                      ),
                     ),
                   )
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 20),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.edit_rounded,
-                    color: Colors.amber,
-                    size: 40.0,
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.edit_rounded,
+                      color: Colors.amber,
+                      size: 40.0,
+                    ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
                       'Feedback',
                       style: TextStyle(fontSize: 20.0, color: Colors.white),
                     ),
@@ -80,16 +98,62 @@ class Settings extends StatelessWidget {
                     color: Colors.amber,
                     iconSize: 40.0,
                     icon: const Icon(Icons.logout),
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const Admin_user_page()),
-                          (route) => false);
+                    onPressed: () async {
+                      final result = showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Are you sure?'),
+                          content: const Text('You are logging out'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Admin_user_page()),
+                                    (route) => false);
+                              },
+                              child: const Text('Logout'),
+                            ),
+                          ],
+                        ),
+                      );
                     },
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      final result = showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Are you sure?'),
+                          content: const Text('You are logging out'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Admin_user_page()),
+                                    (route) => false);
+                              },
+                              child: const Text('Logout'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: const Text(
                       'Logout',
                       style: TextStyle(fontSize: 20.0, color: Colors.white),
                     ),

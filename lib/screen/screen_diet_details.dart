@@ -141,15 +141,49 @@ class _DietDetailsState extends State<DietDetails> {
                             ),
                             const SizedBox(width: 20),
                             ElevatedButton(
-                              onPressed: () async {
-                                await DietDB().deletediet(widget.id);
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (ctx) {
-                                  return Dietplan();
-                                }));
+                              // onPressed: () async {
+                              //   await DietDB().deletediet(widget.id);
+                              //   Navigator.of(context).pop();
+                              //   Navigator.of(context).pop();
+                              //   Navigator.of(context)
+                              //       .push(MaterialPageRoute(builder: (ctx) {
+                              //     return Dietplan();
+                              //   }));
+                              // },
+                              onPressed: () {
+                                final result = showDialog<bool>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Are you sure?'),
+                                    content: const Text(
+                                        'This action will permanently delete this data'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, false),
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          await DietDB().deletediet(widget.id);
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(builder: (ctx) {
+                                            return const Dietplan();
+                                          }));
+                                        },
+                                        child: const Text('Delete'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+
+                                // if (result == null || !result) {
+                                //   return;
+                                // }
                               },
+
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
                               ),

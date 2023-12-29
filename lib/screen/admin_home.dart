@@ -5,8 +5,6 @@ import 'package:homeworkout/db%20model/category/category_db.dart';
 import 'package:homeworkout/db%20model/category/diet_db.dart';
 import 'package:homeworkout/db%20model/category/message_db.dart';
 import 'package:homeworkout/db%20model/category/tips_db.dart';
-// import 'package:homeworkout/db/category/category_db.dart';
-// import 'package:homeworkout/db/category/diet_db.dart';
 import 'package:homeworkout/screen/diet.dart';
 import 'package:homeworkout/screen/screen_gym.dart';
 import 'package:homeworkout/screen/screen_without.dart';
@@ -26,7 +24,6 @@ class _AdminHomepageState extends State<AdminHomepage> {
     DietDB().refresh();
     TipsDB().refreshtips();
     MessageDB().refreshMessage();
-    // TODO: implement initState
     super.initState();
   }
 

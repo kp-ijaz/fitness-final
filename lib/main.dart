@@ -7,8 +7,6 @@ import 'package:homeworkout/db%20model/message_model.dart';
 import 'package:homeworkout/db%20model/report_model.dart';
 import 'package:homeworkout/db%20model/tips_model.dart';
 import 'package:homeworkout/screen/notification_controller.dart';
-// import 'package:homeworkout/db/db_model.dart';
-// import 'package:homeworkout/db/diet_model.dart';
 import 'package:homeworkout/screen/splashscreen.dart';
 
 Future<void> main() async {

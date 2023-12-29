@@ -231,7 +231,6 @@ class _Add_dietState extends State<Add_diet> {
     const title = "Diet plan is updated..!";
     const bodymsg = "A new Diet is added by admin check out";
     msgid = DateTime.now().millisecondsSinceEpoch;
-    print(msgid);
     final msg = MessageModal(
         id: msgid,
         message: title,

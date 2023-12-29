@@ -1,14 +1,11 @@
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
-// import 'package:homeworkout/btmnavigation.dart';
 import 'package:homeworkout/user_screen/user_main_home.dart';
-// import 'package:homeworkout/btmnavigation.dart';
-// import 'package:homeworkout/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Headpage extends StatelessWidget {
-  const Headpage({super.key});
-
+  Headpage({super.key});
+  final formKey = GlobalKey<FormState>();
+  final _usenamController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +34,18 @@ class Headpage extends StatelessWidget {
                       padding:
                           const EdgeInsets.only(top: 150, right: 25, left: 25),
                       child: Form(
+                        key: formKey,
                         child: TextFormField(
+                          controller: _usenamController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter a name';
+                            } else if (value.length <= 2) {
+                              return 'Enter a valid name';
+                            } else {
+                              return null;
+                            }
+                          },
                           style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -56,10 +64,16 @@ class Headpage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
                       child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (ctx) => const UserMainHome()));
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              var _sharedPrifrence =
+                                  await SharedPreferences.getInstance();
+                              _sharedPrifrence.setString(
+                                  'user', _usenamController.text);
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (ctx) => const UserMainHome()));
+                            }
                           },
                           child: const Text("Let's start")),
                     )

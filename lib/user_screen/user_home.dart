@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeworkout/db%20model/category/category_db.dart';
 import 'package:homeworkout/db%20model/category/diet_db.dart';
-import 'package:homeworkout/db%20model/category/message_db.dart';
+// import 'package:homeworkout/db%20model/category/message_db.dart';
 import 'package:homeworkout/db%20model/db_model.dart';
 import 'package:homeworkout/user_screen/sub-category.dart';
 // import 'package:homeworkout/db/category/category_db.dart';
@@ -9,6 +9,7 @@ import 'package:homeworkout/user_screen/sub-category.dart';
 import 'package:homeworkout/user_screen/user_dietplan_screen.dart';
 import 'package:homeworkout/user_screen/user_tips.dart';
 import 'package:homeworkout/user_screen/yagawrkout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../db model/category/tips_db.dart';
 
@@ -22,12 +23,15 @@ class UserHom extends StatefulWidget {
 class _UserHomState extends State<UserHom> {
   @override
   void initState() {
+    getUser();
     CategoryDB().refreshUi();
     DietDB().refresh();
     TipsDB().refreshtips();
     // MessageDB().refreshMessage();
     super.initState();
   }
+
+  String userName = 'user';
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +57,17 @@ class _UserHomState extends State<UserHom> {
               ),
             ),
           ),
-          title: const Column(
+          title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Row(
                 children: [
-                  Text('Hii '),
+                  const Text('Hii '),
                   Text(
-                    'User',
+                    userName,
                     style: TextStyle(color: Colors.amber),
                   ),
                 ],
@@ -280,5 +284,11 @@ class _UserHomState extends State<UserHom> {
         ),
       ),
     );
+  }
+
+  void getUser() async {
+    var shared = await SharedPreferences.getInstance();
+    userName = shared.getString('user')!;
+    setState(() {});
   }
 }
