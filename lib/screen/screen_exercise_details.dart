@@ -106,12 +106,15 @@ class ExerciseDetails extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, left: 20),
-              child: Text(
-                level.toString(),
-                style: const TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
+                padding: const EdgeInsets.only(top: 20, left: 20),
+                child: Column(
+                  children: List.generate(level.length, (index) {
+                    return Text(
+                      level[index].name,
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                    );
+                  }),
+                )),
           ],
         ),
       ),

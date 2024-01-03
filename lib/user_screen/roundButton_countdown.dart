@@ -13,11 +13,13 @@ class RoundButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: 5,
       ),
-      child: CircleAvatar(
-        radius: 30,
-        child: Icon(
-          icon,
-          size: 36,
+      child: icon(
+        child: CircleAvatar(
+          radius: 30,
+          child: Icon(
+            icon,
+            size: 36,
+          ),
         ),
       ),
     );
